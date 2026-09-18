@@ -2,12 +2,10 @@ console.log('Hello from app.js! Your JavaScript is connected and running!');
 
 import * as orderHandler from './order-handler.js';
 import * as priceCalculator from './price-calculator.js';
+import * as resultsDisplay from './results-display.js';
 
 // Reference to the order form.
 const orderForm = document.getElementById('order-form');
-
-// Reference to the order summary
-const orderSummary = document.getElementById('order-summary');
 
 // Stores all submitted orders.
 const orders = [];
@@ -35,13 +33,9 @@ const handleOrderSubmit = function (event) {
     // Verify the new orders array.
     console.log(orders);
 
-    let message = `Ordered ${orderData.qty} ${orderData.size} T-Shirts`;
+    // Display the order information.
+    resultsDisplay.displayOrderInfo(newOrder);
 
-    if (orderData.giftWrap === true) {
-        message += ' - gift wrapped';
-    }
-
-    orderSummary.textContent = message;
 };
 
 // Initializes the application.
