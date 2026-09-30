@@ -8,10 +8,10 @@ const displaySize = document.getElementById('display-size');
 const displayGift = document.getElementById('display-gift');
 
 // Displays the completed order.
-export const displayOrder = (total, qty, size, gift) => {
-    displayTotal.textContent = total;
-    displayQty.textContent = qty;
-    displaySize.textContent = size;
+export const displayOrder = function (order) {
+    displayTotal.textContent = order.totalPrice.toFixed(2);
+    displayQty.textContent = order.qty;
+    displaySize.textContent = order.size;
     
     if (order.giftWrap){
         displayGift.textContent = 'Yes';
