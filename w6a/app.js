@@ -3,6 +3,7 @@ console.log('Hello from app.js! Your JavaScript is connected and running!');
 import * as orderHandler from './order-handler.js';
 import * as priceCalculator from './price-calculator.js';
 import * as resultsDisplay from './results-display.js';
+import * as formhandler from './form-handler.js';
 
 // Reference to the order form.
 const orderForm = document.getElementById('order-form');
@@ -31,10 +32,10 @@ const handleOrderSubmit = function (event) {
     orders.push(newOrder);
 
     // Verify the new orders array.
-    console.log(orders);
+    resultsDisplay.displayOrderInfo(newOrder);
 
     // Display the order information.
-    resultsDisplay.displayOrderInfo(newOrder);
+    console.log(orders);
 
 };
 
