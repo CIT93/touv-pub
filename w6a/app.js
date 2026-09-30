@@ -32,6 +32,9 @@ const handleOrderSubmit = function (event) {
     // Store the new order
     orders.push(newOrder);
 
+    // Save all orders to localStorage.
+    orders.saveOrders(newOrder);
+
     // Verify the new orders array.
     resultsDisplay.displayOrder(newOrder);
 
