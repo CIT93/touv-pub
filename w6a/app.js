@@ -4,6 +4,7 @@ import * as orderHandler from './order-handler.js';
 import * as priceCalculator from './price-calculator.js';
 import * as resultsDisplay from './results-display.js';
 import * as formhandler from './form-handler.js';
+import * as orderStorage from './order-storage.js';
 
 // Reference to the order form.
 const orderForm = document.getElementById('order-form');
