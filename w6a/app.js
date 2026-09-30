@@ -33,7 +33,7 @@ const handleOrderSubmit = function (event) {
     orders.push(newOrder);
 
     // Verify the new orders array.
-    resultsDisplay.displayOrderInfo(newOrder);
+    resultsDisplay.displayOrder(newOrder);
 
     // Display the order information.
     console.log(orders);
@@ -44,6 +44,13 @@ const handleOrderSubmit = function (event) {
 const init = function () {
     console.log('App Initialized');
 
+    // Load previously saved orders.
+    const loadedOrders = orderStorage.loadOrders();
+    
+    if (loadedOrders.length > 0) {
+        orders.push(...loadedOrders);
+    }
+    
     orderForm.addEventListener('submit', handleOrderSubmit);
 };
 
