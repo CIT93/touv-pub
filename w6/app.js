@@ -53,6 +53,7 @@ const init = function () {
     
     if (loadedOrders.length > 0) {
         orders.push(...loadedOrders);
+        // Render the full list instead of just the last one
         orderList.renderOrders(orders);
     }
     
