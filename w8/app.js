@@ -24,8 +24,9 @@ const handleOrderSubmit = function (event) {
     // Create a new order using the original data,
     // calculated price, and a timestamp.
     const newOrder = {
+        id: Date.now().toString(),
         ...orderData,
-        ...calculatedPrice,
+        totalPrice: calculatedPrice,
         timestamp: new Date().toISOString()
     };
 
