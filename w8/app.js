@@ -23,11 +23,13 @@ const handleOrderSubmit = function (event) {
 
     // Create a new order using the original data,
     // calculated price, and a timestamp.
+    // app.js - inside handleOrderSubmit
     const newOrder = {
-        id: Date.now().toString(),
+        id: Date.now().toString(), // <--- ADD THIS LINE (Unique ID based on time)
         ...orderData,
         totalPrice: calculatedPrice,
         timestamp: new Date().toISOString()
+        // ... any other properties
     };
 
     // Store the new order
