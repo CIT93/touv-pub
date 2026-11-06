@@ -12,6 +12,15 @@ const orderForm = document.getElementById('order-form');
 // Stores all submitted orders.
 const orders = [];
 
+// app.js
+const handleDelete = function(id) {
+    console.log("App.js: Requesting delete for order", id);
+};
+
+const handleEdit = function(id) {
+    console.log("App.js: Requesting edit for order", id);
+};
+
 // Handles the form submission.
 const handleOrderSubmit = function (event) {
     event.preventDefault();
@@ -40,7 +49,10 @@ const handleOrderSubmit = function (event) {
 
     // Verify the new orders array.
     // resultsDisplay.displayOrder(newOrder);
-    orderList.renderOrders(orders);
+    orderList.renderOrders(orders, {
+        onDelete: handleDelete,
+        onEdit: handleEdit
+    });
 
     // Display the order information.
     console.log(orders);
@@ -57,7 +69,10 @@ const init = function () {
     if (loadedOrders.length > 0) {
         orders.push(...loadedOrders);
         // Render the full list instead of just the last one
-        orderList.renderOrders(orders);
+        orderList.renderOrders(orders, {
+            onDelete: handleDelete,
+            onEdit: handleEdit
+        });
     }
     
     orderForm.addEventListener('submit', handleOrderSubmit);
