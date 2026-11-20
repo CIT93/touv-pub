@@ -1,0 +1,82 @@
+console.log('Hello from app.js! Your JavaScript is connected and running!');
+
+import * as orderHandler from './order-handler.js';
+import * as priceCalculator from './price-calculator.js';
+import * as orderList from './order-list.js';
+import * as formhandler from './form-handler.js';
+import * as orderStorage from './order-storage.js';
+
+// Reference to the order form.
+const orderForm = document.getElementById('order-form');
+
+// Stores all submitted orders.
+const orders = [];
+
+// app.js
+const handleDelete = function(id) {
+    console.log("App.js: Requesting delete for order", id);
+};
+
+const handleEdit = function(id) {
+    console.log("App.js: Requesting edit for order", id);
+};
+
+// Handles the form submission.
+const handleOrderSubmit = function (event) {
+    event.preventDefault();
+
+    const orderData = orderHandler.getOrderInputs();
+
+    // Calculate the total price.
+    const calculatedPrice = priceCalculator.calculateTotal(orderData);
+
+    // Create a new order using the original data,
+    // calculated price, and a timestamp.
+    // app.js - inside handleOrderSubmit
+    const newOrder = {
+        id: Date.now().toString(), // <--- ADD THIS LINE (Unique ID based on time)
+        ...orderData,
+        totalPrice: calculatedPrice,
+        timestamp: new Date().toISOString()
+        // ... any other properties
+    };
+
+    // Store the new order
+    orders.push(newOrder);
+
+    // Save all orders to localStorage.
+    orderStorage.saveOrders(orders);
+
+    // Verify the new orders array.
+    // resultsDisplay.displayOrder(newOrder);
+    orderList.renderOrders(orders, {
+        onDelete: handleDelete,
+        onEdit: handleEdit
+    });
+
+    // Display the order information.
+    console.log(orders);
+
+};
+
+// Initializes the application.
+const init = function () {
+    console.log('App Initialized');
+
+    // Load previously saved orders.
+    const loadedOrders = orderStorage.loadOrders();
+    
+    if (loadedOrders.length > 0) {
+        orders.push(...loadedOrders);
+        // Render the full list instead of just the last one
+        orderList.renderOrders(orders, {
+            onDelete: handleDelete,
+            onEdit: handleEdit
+        });
+    }
+    
+    orderForm.addEventListener('submit', handleOrderSubmit);
+};
+
+// Start the app when the DOM is ready.
+document.addEventListener('DOMContentLoaded', init);
