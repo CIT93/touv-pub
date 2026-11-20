@@ -14,8 +14,19 @@ const orders = [];
 
 // app.js
 const handleDelete = function(id) {
-    console.log("App.js: Requesting delete for order", id);
-};
+    const orderIndex = orders.findIndex(function(order) {
+        return order.id === id;
+    });
+    
+    if (orderIndex !== -1) {
+        orders.splice(orderIndex, 1);
+}
+orderStorage.saveOrders(orders);
+orderList.renderOrders(orders, {
+    onDelete: handleDelete,
+    onEdit: handleEdit
+});
+}
 
 const handleEdit = function(id) {
     console.log("App.js: Requesting edit for order", id);
