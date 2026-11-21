@@ -20,16 +20,27 @@ const handleDelete = function(id) {
     
     if (orderIndex !== -1) {
         orders.splice(orderIndex, 1);
-}
-orderStorage.saveOrders(orders);
-orderList.renderOrders(orders, {
-    onDelete: handleDelete,
-    onEdit: handleEdit
-});
-}
+    }
+    
+    orderStorage.saveOrders(orders);
+    
+    orderList.renderOrders(orders, {
+        onDelete: handleDelete,
+        onEdit: handleEdit
+    });
+};
 
 const handleEdit = function(id) {
-    console.log("App.js: Requesting edit for order", id);
+    const order = orders.find(function(order) {
+        return order.id === id;
+    });
+
+    if (!order) return;
+
+    document.getElementById('qty').value = order.qty;
+    document.querySelector('input[name="size"][value="' + order.size + '"]').checked = true;
+    document.getElementById('gift-wrap').checked = order.giftWrap;
+    document.getElementById('order-id').value = order.id;
 };
 
 // Handles the form submission.
