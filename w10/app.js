@@ -51,34 +51,54 @@ const handleOrderSubmit = function (event) {
 
     // Calculate the total price.
     const calculatedPrice = priceCalculator.calculateTotal(orderData);
+    
+    // Get the hidden order ID.
+    const orderId = document.getElementById('order-id').value;
 
-    // Create a new order using the original data,
-    // calculated price, and a timestamp.
-    // app.js - inside handleOrderSubmit
-    const newOrder = {
-        id: Date.now().toString(), // <--- ADD THIS LINE (Unique ID based on time)
-        ...orderData,
-        totalPrice: calculatedPrice,
-        timestamp: new Date().toISOString()
-        // ... any other properties
-    };
+    if (orderId) {
+        // Find the existing order.
+        const orderIndex = orders.findIndex(function(order) {
+            return order.id === orderId;
+        });
 
-    // Store the new order
-    orders.push(newOrder);
+        if (orderIndex !== -1) {
+            // Update the existing order.
+            orders[orderIndex] = {
+                ...orders[orderIndex],
+                ...orderData,
+                totalPrice: calculatedPrice
+            };
+        }
 
-    // Save all orders to localStorage.
+    } else {
+        // Create a completely new order.
+        const newOrder = {
+            id: Date.now().toString(),
+            ...orderData,
+            totalPrice: calculatedPrice,
+            timestamp: new Date().toISOString()
+        };
+
+        orders.push(newOrder);
+    }
+
+    // Save all orders.
     orderStorage.saveOrders(orders);
 
-    // Verify the new orders array.
-    // resultsDisplay.displayOrder(newOrder);
+    //Re-render the table.
     orderList.renderOrders(orders, {
         onDelete: handleDelete,
         onEdit: handleEdit
     });
 
-    // Display the order information.
-    console.log(orders);
+    // Clear the hidden ID.
+    document.getElementById('order-id').value = '';
 
+    //Reset the form.
+    orderForm.reset();
+
+    console.log(orders);
+    
 };
 
 // Initializes the application.
